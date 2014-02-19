@@ -1,0 +1,23 @@
+{
+    "name": "inkcloud/ic-billing-module",
+    "description": "Ink Cloud Billing Module",
+    "license": "Prop",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "ext-intl":"*",
+        "ext-apc":"*",
+        "ext-soap":"*",
+        "ext-mbstring":"*",
+        "zendframework/zendframework": "2.2.4"
+    },
+    "autoload": {
+        "psr-0": {
+            "IcBase\\": "src/"
+        }
+    },    
+    "config": {    
+        "discard-changes": true
+    }
+
+}

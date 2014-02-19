@@ -1,6 +1,6 @@
 {
-    "name": "inkcloud/ic-billing-module",
-    "description": "Ink Cloud Billing Module",
+    "name": "inkcloud/ic-base",
+    "description": "Ink Cloud Base Module",
     "license": "Prop",
     "minimum-stability": "dev",
     "require": {

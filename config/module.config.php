@@ -18,5 +18,10 @@ return array(
         ),            	
 	),
     'service_manager'	=> array(
-	)
+	),
+    'view_helpers'  => array(
+      'invokables'  => array(
+            'twbHorizontalForm'             => 'IcBase\View\Helper\HorizontalForm'
+        )
+    ),    
 );

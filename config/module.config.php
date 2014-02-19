@@ -6,13 +6,13 @@ use DoctrineMongoODMModule\Service as ODMService;
 return array(
     'doctrine' => array(
         'driver' => array(
-            'ic_base' => array(
+            'odm_default' => array(
                 'class' => 'Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver',                
                 'paths' => array(
                     __DIR__ . '/../src/IcBase/Entity'
                 ),
                 'drivers' => array(
-                    'IcBase\Entity'    => 'ic_base'
+                    'IcBase\Entity'    => 'odm_default'
                 )
             )
         ),            	

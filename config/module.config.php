@@ -17,6 +17,11 @@ return array(
             )
         ),            	
 	),
+    'service_manager' => array(
+        'invokables' => array(
+            'IcBase\Service\HumanIdService'         => 'IcBase\Service\HumanIdService'
+        )
+    ),
     'view_helpers'  => array(
       'invokables'  => array(
             'twbHorizontalForm'             => 'IcBase\View\Helper\HorizontalForm'

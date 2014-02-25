@@ -9,35 +9,13 @@ abstract class AbstractService implements ServiceLocatorAwareInterface
 {
 	use ServiceLocatorAwareTrait;
 
-	const SEQUENCE_START = 10000;
-	const COUNTER_REPOSITORY = '\IcBase\Entity\HumanIdCounter';
-
 	protected $errorMessage;
 
 	abstract public function getRepositoryName();
 
 	public function getNextHumanIdSequence()
 	{ 
-		$counter = $this->getDocumentManager()->createQueryBuilder(self::COUNTER_REPOSITORY)
-					->findAndUpdate()
-					->returnNew()
-					->field('entity')->equals($this->getRepositoryName())							
-					->field('sequence')->inc(1)
-					->getQuery()
-					->execute();
-
-		if( $counter === null ) {
-			$counter = $this->getDocumentManager()->createQueryBuilder(self::COUNTER_REPOSITORY)
-						->insert()
-						->returnNew()
-						->field('entity')->set($this->getRepositoryName())								
-						->field('sequence')->set(self::SEQUENCE_START)
-						->getQuery()
-						->execute();
-			return self::SEQUENCE_START;
-		} else {
-			return $counter->getSequence();
-		}
+		return $this->getServiceLocator()->get('IcBase\Service\HumanIdService')->getNextId($this->getRepositoryName());
 	}
 
 	public function getDocumentManager()

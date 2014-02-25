@@ -1,41 +1,47 @@
 <?php
 
+
 namespace IcBase\Form;
 
-/**
- * extends Address form and adds name and careOf
- */
-class ShippingAddress extends Address
+use Zend\Form\Form;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\InputFilter\InputFilterProviderInterface;
+
+class Login extends Form implements ServiceLocatorAwareInterface, InputFilterProviderInterface
 {
+	use ServiceLocatorAwareTrait;
+
 	public function init()
 	{
-		parent::init();
-
         $this->add(array(
-            'name' => 'name',
+            'name' => 'username',
             'options' => array(
-                'label' => 'Name',
+                'label' => 'Username'
             ),
             'attributes' => array(
-                'type'  => 'text',
+                'type'  => 'text'
             )
-        ), array('priority' => 100));
+            
+        ));
 
         $this->add(array(
-            'name' => 'careOf',
+            'name' => 'password',
             'options' => array(
-                'label' => 'Care Of',
+                'label' => 'Password'
             ),
             'attributes' => array(
-                'type'  => 'text',
+                'type'  => 'password',
             )
-        ), array('priority' => 99));
-	}
+            
+        ));
+    }
 
     public function getInputFilterSpecification()
     {
-        return array_merge(parent::getInputFilterSpecification(), array(
-            'name'  => array(
+        return array(
+            'username'  => array(
                 'required' => true,
                 'filters' => array(
                      array('name' => 'Zend\Filter\StringTrim')
@@ -44,7 +50,7 @@ class ShippingAddress extends Address
                      /* new \Zend\Validator\Regex('/^#[0-9a-fA-F]{6}$/') */
                 )
             ),
-            'careOf'  => array(
+            'password'  => array(
                 'required' => false,
                 'filters' => array(
                      array('name' => 'Zend\Filter\StringTrim')
@@ -52,7 +58,7 @@ class ShippingAddress extends Address
                 'validators' => array(
                      /* new \Zend\Validator\Regex('/^#[0-9a-fA-F]{6}$/') */
                 )
-            )
-    	));
-    }	
+            )                
+        );
+    }           
 }

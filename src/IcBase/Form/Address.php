@@ -18,11 +18,12 @@ class Address extends Form implements ServiceLocatorAwareInterface, InputFilterP
         $this->add(array(
             'name' => 'address1',
             'options' => array(
-                'label' => 'Address 1',
+                'label' => 'Address 1'
             ),
             'attributes' => array(
-                'type'  => 'text',
+                'type'  => 'text'
             )
+            
         ));
 
         $this->add(array(
@@ -49,8 +50,8 @@ class Address extends Form implements ServiceLocatorAwareInterface, InputFilterP
             'name' => 'stateProvince',
             'type' => 'Zend\Form\Element\Select',
             'options' => array(
-                'label'         => \Factory\Util\Util::getLocaliedStateLabel(),
-                'value_options' => \Factory\Util\Util::getLocalizedStateProvinces(true),
+                'label'         => \IcBase\Util\Util::getLocaliedStateLabel(),
+                'value_options' => \IcBase\Util\Util::getLocalizedStateProvinces(true),
                 'twb'           => array(
                 )
             ),
@@ -61,7 +62,7 @@ class Address extends Form implements ServiceLocatorAwareInterface, InputFilterP
         $this->add(array(
             'name' => 'postalCode',
             'options' => array(
-                'label' => \Factory\Util\Util::getLocaliedPostalCodeLabel(),
+                'label' => \IcBase\Util\Util::getLocaliedPostalCodeLabel(),
             ),
             'attributes' => array(
                 'type'  => 'text',

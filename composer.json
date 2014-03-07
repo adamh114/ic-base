@@ -8,8 +8,7 @@
         "ext-intl":"*",
         "ext-apc":"*",
         "ext-soap":"*",
-        "ext-mbstring":"*",
-        "zendframework/zendframework": "2.2.4"
+        "ext-mbstring":"*"
     },
     "autoload": {
         "psr-0": {

@@ -20,7 +20,7 @@ abstract class AbstractService implements ServiceLocatorAwareInterface
 
 	public function getDocumentManager()
 	{
-		return $this->getServiceLocator()->get('ic_billing_dm');
+		return $this->getServiceLocator()->get('doctrine.documentmanager.odm_default');
 	}
 
 	public function find($id)

@@ -35,6 +35,7 @@ abstract class AbstractService implements ServiceLocatorAwareInterface
 		return $this->getDocumentManager()
 			->getRepository($this->getRepositoryName())
 			->createQueryBuilder()
+			->field('isDeleted')->notEqual(true)
 			->sort('createdAt', 'desc')
 			->getQuery()
 			->execute();

@@ -29,7 +29,6 @@ abstract class AbstractService implements ServiceLocatorAwareInterface
 			->getRepository($this->getRepositoryName())->find($id);
 	}
 
-
 	public function findAll()
 	{
 		return $this->getDocumentManager()
@@ -39,6 +38,15 @@ abstract class AbstractService implements ServiceLocatorAwareInterface
 			->sort('createdAt', 'desc')
 			->getQuery()
 			->execute();
+	}
+
+	public function getQueryBuilder()
+	{
+		return $this->getDocumentManager()
+			->getRepository($this->getRepositoryName())
+			->createQueryBuilder()
+			->field('isDeleted')->notEqual(false)
+			->sort('createdAt', 'desc');
 	}
 
 	public function add(\Zend\Stdlib\Parameters $params)
@@ -89,7 +97,6 @@ abstract class AbstractService implements ServiceLocatorAwareInterface
 
 		foreach($id as $deleteId) {
 			if(method_exists($this->getRepositoryName(), 'setIsDeleted')) {
-
 				$className = $this->getRepositoryName();
 				if(!($deleteId  instanceof $className)) {
 					$entity = $this->getDocumentManager()->getRepository($this->getRepositoryName())->find($deleteId);
@@ -99,6 +106,7 @@ abstract class AbstractService implements ServiceLocatorAwareInterface
 				
 				$entity->setIsDeleted(true);
 				$this->getDocumentManager()->persist($entity);				
+				$this->getDocumentManager()->flush();	
 			}
 		}
 

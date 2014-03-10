@@ -14,6 +14,11 @@ class HorizontalForm extends AbstractHelper implements ServiceLocatorAwareInterf
 
 	protected $view;
 
+	protected $elementStr = '';
+	protected $options;
+	protected $labelColumn;
+	protected $offsetStr;
+
     public function setView( Renderer $view)
     {
         $this->view = $view;
@@ -26,7 +31,8 @@ class HorizontalForm extends AbstractHelper implements ServiceLocatorAwareInterf
 
 	public function __invoke($form, $labelColumn)
 	{
-		$offsetCalcArr = explode('-', $labelColumn);
+		$this->labelColumn = $labelColumn;
+		$offsetCalcArr = explode('-', $this->labelColumn);
 		$offsetSpace = 12 - $offsetCalcArr[count($offsetCalcArr)-1];
 
 		$offsetArr = array();
@@ -45,37 +51,50 @@ class HorizontalForm extends AbstractHelper implements ServiceLocatorAwareInterf
 			unset($elementArr[0]);
 		}
 
-		$elementStr = implode('-', $elementArr);
+		$this->elementStr = implode('-', $elementArr);
 
 		$offsetArr[count($offsetCalcArr)-1] = 'offset';
 		$offsetArr[count($offsetCalcArr)] = $offsetCalcArr[count($offsetCalcArr)-1];
-		$offsetStr = implode('-', $offsetArr);
+		$this->offsetStr = implode('-', $offsetArr);
 
 		foreach($form as $element) {
-			$options = $element->getOptions();
-
-			if(in_array($element->getAttribute('type'), array('checkbox', 'submit' ))) {
-				$options['column-size'] = $elementStr . ' ' . $offsetStr;	
+			if($element instanceof \Zend\Form\Fieldset) {
+				foreach($element as $e) {
+					if($e instanceof \Zend\Form\Fieldset) {
+						foreach($e as $eInner) {
+							$this->setElementColumns($eInner);
+						}
+					} else {	
+						$this->setElementColumns($e);
+					}
+				}		
 			} else {
-
-				if(!in_array($element->getAttribute('type'), array('radio' ))) {
-
-					$options['label_attributes'] = array( 'class' => $labelColumn);
-					$options['column-size'] = $elementStr;	
-					//$options['inline'] = true;
-					
-				} else {
-					$options['label_attributes'] = array( 'class' => $labelColumn);
-					$options['column-size'] = $elementStr;
-
-					//dd($element);
-					//$options['column-size'] = $elementStr;						
-				}
+				$this->setElementColumns($element);
 			}
+		}
+	}
 
-			$element->setOptions($options);
+	public function setElementColumns($element) 
+	{
+		$options = $element->getOptions();
 
+		if(in_array($element->getAttribute('type'), array('checkbox', 'submit' ))) {
+			$options['column-size'] = $this->elementStr . ' ' . $this->offsetStr;	
+		} else {
+
+			if(!in_array($element->getAttribute('type'), array('radio' ))) {
+
+				$options['label_attributes'] = array( 'class' => $this->labelColumn);
+				$options['column-size'] = $this->elementStr;	
+				//$options['inline'] = true;
+				
+			} else {
+				$options['label_attributes'] = array( 'class' => $this->labelColumn);
+				$options['column-size'] = $this->elementStr;
+			}
 		}
 
+		$element->setOptions($options);
 	}
+
 }

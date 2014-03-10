@@ -17,8 +17,7 @@ class Module
         $sharedManager = $app->getEventManager()->getSharedManager();
         // Attach to helper set event and load the document manager helper.
         $sharedManager->attach('doctrine', 'loadCli.post', array($this, 'loadCli')); 
-
-
+                
         $odmEntityManager = $e->getApplication()->getServiceManager()->get('doctrine.documentmanager.odm_default');
         $odmEntityManager->getEventManager()
             ->addEventListener(array(

@@ -25,6 +25,10 @@ abstract class AbstractService implements ServiceLocatorAwareInterface
 
 	public function find($id)
 	{
+		if(is_object($id)) {
+			$id = $id->getId();
+		}
+
 		return $this->getDocumentManager()
 			->getRepository($this->getRepositoryName())->find($id);
 	}

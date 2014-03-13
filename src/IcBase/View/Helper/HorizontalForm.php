@@ -58,43 +58,41 @@ class HorizontalForm extends AbstractHelper implements ServiceLocatorAwareInterf
 		$this->offsetStr = implode('-', $offsetArr);
 
 		foreach($form as $element) {
-			if($element instanceof \Zend\Form\Fieldset) {
-				foreach($element as $e) {
-					if($e instanceof \Zend\Form\Fieldset) {
-						foreach($e as $eInner) {
-							$this->setElementColumns($eInner);
-						}
-					} else {	
-						$this->setElementColumns($e);
-					}
-				}		
-			} else {
-				$this->setElementColumns($element);
-			}
+			$this->setElementColumns($element);
 		}
 	}
 
 	public function setElementColumns($element) 
 	{
-		$options = $element->getOptions();
 
-		if(in_array($element->getAttribute('type'), array('checkbox', 'submit' ))) {
-			$options['column-size'] = $this->elementStr . ' ' . $this->offsetStr;	
-		} else {
-
-			if(!in_array($element->getAttribute('type'), array('radio' ))) {
-
-				$options['label_attributes'] = array( 'class' => $this->labelColumn);
-				$options['column-size'] = $this->elementStr;	
-				//$options['inline'] = true;
-				
-			} else {
-				$options['label_attributes'] = array( 'class' => $this->labelColumn);
-				$options['column-size'] = $this->elementStr;
+		if(($element instanceof \Zend\Element\Fieldset) || ($element instanceof \Zend\Form\Element\Collection)) {
+			foreach($element as $multi) {
+				$this->setElementColumns($multi);
 			}
-		}
+		} else {
+			//echo get_class($element) .  'In Element' . $element->getAttribute('name') .  '<br/>';
 
-		$element->setOptions($options);
+			$options = $element->getOptions();
+
+			if(in_array($element->getAttribute('type'), array('checkbox', 'submit' ))) {
+				$options['column-size'] = $this->elementStr . ' ' . $this->offsetStr;	
+			} else {
+
+				if(!in_array($element->getAttribute('type'), array('radio' ))) {
+
+					$options['label_attributes'] = array( 'class' => $this->labelColumn);
+					$options['column-size'] = $this->elementStr;	
+					//$options['inline'] = true;
+					
+				} else {
+					$options['label_attributes'] = array( 'class' => $this->labelColumn);
+					$options['column-size'] = $this->elementStr;
+				}
+			}
+
+			//$options['twb-layout'] = 'horizontal';
+			$element->setOptions($options);
+		}
 	}
 
 }

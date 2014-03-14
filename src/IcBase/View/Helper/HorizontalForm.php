@@ -64,13 +64,18 @@ class HorizontalForm extends AbstractHelper implements ServiceLocatorAwareInterf
 
 	public function setElementColumns($element) 
 	{
-
-		if(($element instanceof \Zend\Element\Fieldset) || ($element instanceof \Zend\Form\Element\Collection)) {
+		if(($element instanceof \Zend\Form\Fieldset) || ($element instanceof \Zend\Form\Element\Collection)) {
 			foreach($element as $multi) {
 				$this->setElementColumns($multi);
 			}
+
+			if($element instanceof \Zend\Form\Element\Collection) {
+                $templateElement = $element->getTemplateElement();
+                foreach($templateElement as $innerElement) {
+					$this->setElementColumns($innerElement);
+                }
+			}
 		} else {
-			//echo get_class($element) .  'In Element' . $element->getAttribute('name') .  '<br/>';
 
 			$options = $element->getOptions();
 
@@ -90,7 +95,7 @@ class HorizontalForm extends AbstractHelper implements ServiceLocatorAwareInterf
 				}
 			}
 
-			//$options['twb-layout'] = 'horizontal';
+			$options['twb-layout'] = 'horizontal';
 			$element->setOptions($options);
 		}
 	}

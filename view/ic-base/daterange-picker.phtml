@@ -1,0 +1,37 @@
+<link rel="stylesheet" type="text/css" href="/global/dt3/assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+<?php $this->inlineScript()->appendFile('/global/dt3/assets/plugins/bootstrap-daterangepicker/daterangepicker.js'); ?>
+
+<?php $this->inlineScript()->captureStart(); ?>
+jQuery(document).ready(function(){
+
+    $('#<?php echo $this->elementName; ?>').daterangepicker({
+            opens: (App.isRTL() ? 'left' : 'right'),
+            format: 'M/DD/YYYY',
+            separator: ' to ',
+            startDate: moment().subtract('days', 29),
+            endDate: moment(),
+            minDate: '01/01/2012',
+            maxDate: '12/31/2014',
+        },
+        function (start, end) {
+            var format = 'M/DD/YYYY';
+            console.log("Callback has been called!");
+            $("#dateRangePickerStartDate").val(start.toString('MM/dd/yyyy'));
+            $("#dateRangePickerEndDate").val(end.toString('MM/dd/yyyy'));
+
+            $('#<?php echo $this->elementName; ?> input').val(start.format(format) + ' - ' + end.format(format));
+        }
+    );        
+});
+
+
+<?php $this->inlineScript()->captureEnd(); ?>
+
+<div class="input-group" id="<?php echo $this->elementName; ?>">
+	<input type="hidden" name="dateRangePicker[startDate]" id="dateRangePickerStartDate" />
+	<input type="hidden" name="dateRangePicker[endDate]" id="dateRangePickerEndDate" />
+	<input type="text" class="form-control">
+	<span class="input-group-btn">
+		<button class="btn default date-range-toggle" type="button"><i class="fa fa-calendar"></i></button>
+	</span>
+</div>

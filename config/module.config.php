@@ -24,7 +24,13 @@ return array(
     ),
     'view_helpers'  => array(
       'invokables'  => array(
-            'twbHorizontalForm'             => 'IcBase\View\Helper\HorizontalForm'
+            'twbHorizontalForm'             => 'IcBase\View\Helper\HorizontalForm',
+            'dateRangePicker'               => 'IcBase\View\Helper\DateRangePicker'
         )
-    ),    
+    ),
+    'view_manager'  => array(
+        'template_map' => array(
+            'ic-base/daterange-picker'  => __DIR__ . '/../view/ic-base/daterange-picker.phtml'
+        )
+    )            
 );

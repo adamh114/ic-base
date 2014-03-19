@@ -65,6 +65,7 @@ class HorizontalForm extends AbstractHelper implements ServiceLocatorAwareInterf
 	public function setElementColumns($element) 
 	{
 		if(($element instanceof \Zend\Form\Fieldset) || ($element instanceof \Zend\Form\Element\Collection)) {
+			
 			foreach($element as $multi) {
 				$this->setElementColumns($multi);
 			}
@@ -75,20 +76,23 @@ class HorizontalForm extends AbstractHelper implements ServiceLocatorAwareInterf
 					$this->setElementColumns($innerElement);
                 }
 			}
+
 		} else {
 
 			$options = $element->getOptions();
 
-			if(in_array($element->getAttribute('type'), array('checkbox', 'submit' ))) {
+			if(in_array($element->getAttribute('type'), array( 'checkbox', 'submit' ))) {
 				$options['column-size'] = $this->elementStr . ' ' . $this->offsetStr;	
 			} else {
 
-				if(!in_array($element->getAttribute('type'), array('radio' ))) {
+				if(!in_array($element->getAttribute('type'), array('radio', 'multi_checkbox' ))) {
 
 					$options['label_attributes'] = array( 'class' => $this->labelColumn);
 					$options['column-size'] = $this->elementStr;	
 					//$options['inline'] = true;
 					
+				} else if( $element->getAttribute('type') == 'radio' ) {
+					$options['column-size'] = $this->elementStr;						
 				} else {
 					$options['label_attributes'] = array( 'class' => $this->labelColumn);
 					$options['column-size'] = $this->elementStr;

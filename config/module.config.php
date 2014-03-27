@@ -25,7 +25,8 @@ return array(
     'view_helpers'  => array(
       'invokables'  => array(
             'twbHorizontalForm'             => 'IcBase\View\Helper\HorizontalForm',
-            'dateRangePicker'               => 'IcBase\View\Helper\DateRangePicker'
+            'dateRangePicker'               => 'IcBase\View\Helper\DateRangePicker',
+            'angularize'                    => 'IcBase\View\Helper\Angularize'
         )
     ),
     'view_manager'  => array(

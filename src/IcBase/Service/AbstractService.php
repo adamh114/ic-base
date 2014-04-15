@@ -10,9 +10,15 @@ abstract class AbstractService implements ServiceLocatorAwareInterface
 	use ServiceLocatorAwareTrait;
 
 	protected $errorMessage;
+	protected $documentManager;
 
 	abstract public function getRepositoryName();
 
+	public function __construct($documentManager=null)
+	{
+		$this->documentManager;
+	}
+	
 	public function getNextHumanIdSequence()
 	{ 
 		return $this->getServiceLocator()->get('IcBase\Service\HumanIdService')->getNextId($this->getRepositoryName());

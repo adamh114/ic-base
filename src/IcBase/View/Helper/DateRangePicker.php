@@ -38,10 +38,15 @@ class DateRangePicker extends AbstractHelper implements ServiceLocatorAwareInter
 	    return $this;
 	}
 	
-	public function __invoke($elementName)
+	public function __invoke($elementPrefix = 'ic-base-')
 	{
-		$viewModel = new ViewModel(array('elementName'=>'test'));
+		$elementName = $elementPrefix . 'datePicker';
+		$viewModel = new ViewModel();
+        $viewModel->setVariables(array(
+        	'elementName'		=> $elementName
+    	));
         $viewModel->setTemplate( 'ic-base/daterange-picker');
+
         return $this->getView()->render($viewModel);
 	}
 }

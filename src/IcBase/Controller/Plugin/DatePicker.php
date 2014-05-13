@@ -18,7 +18,8 @@ class DatePicker extends AbstractPlugin
 
 	public function getDate($elementName='datePicker')
 	{
-        if( null === ( $value = $this->getController()->params()->fromQuery($elementName) ) ) {
+		$posted = $this->getController()->params()->fromPost($elementName);
+        if( null === ( $value = $this->getController()->params()->fromQuery($elementName, $posted) ) ) {
         	$date = new \DateTime('now');
         } else {
         	$date = new \DateTime($elementName);
@@ -29,7 +30,8 @@ class DatePicker extends AbstractPlugin
 
 	public function getRange($elementName='datePicker')
 	{
-        if( null === ( $value = $this->getController()->params()->fromQuery($elementName) ) ) {
+		$posted = $this->getController()->params()->fromPost($elementName);		
+        if( null === ( $value = $this->getController()->params()->fromQuery($elementName, $posted) ) ) {
 			$startDate = new \DateTime('now');
             $startDate->sub(new \DateInterval('P1D'));
 			$endDate = new \DateTime('now');

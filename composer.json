@@ -6,7 +6,6 @@
     "require": {
         "php": ">=5.4",
         "ext-intl":"*",
-        "ext-apc":"*",
         "ext-soap":"*",
         "ext-mbstring":"*"
     },

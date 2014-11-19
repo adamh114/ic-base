@@ -21,6 +21,9 @@ trait IdentificationTrait
     /** @ODM\Boolean */
 	protected $isDeleted;
 
+    /** @ODM\Date */
+	protected $deletedAt;
+
 	public function toArray()
 	{
 		return get_object_vars($this);
@@ -141,5 +144,29 @@ trait IdentificationTrait
 	    $this->isDeleted = $isDeleted;
 	    return $this;
 	}
+
+	/**
+	 * Getter for deletedAt
+	 *
+	 * @return mixed
+	 */
+	public function getDeletedAt()
+	{
+	    return $this->deletedAt;
+	}
+	
+	/**
+	 * Setter for deletedAt
+	 *
+	 * @param mixed $deletedAt Value to set
+	 *
+	 * @return self
+	 */
+	public function setDeletedAt($deletedAt)
+	{
+	    $this->deletedAt = $deletedAt;
+	    return $this;
+	}
+	
 							
 }

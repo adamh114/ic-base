@@ -52,7 +52,27 @@ class ShippingAddress extends Address
                 'validators' => array(
                      /* new \Zend\Validator\Regex('/^#[0-9a-fA-F]{6}$/') */
                 )
-            )
+            ),
+            'address1'  => [
+                'required' => false,
+                'filters' => array(
+                     array('name' => 'Zend\Filter\StringTrim')
+                ),
+                'validators'        => [
+                    ['name'      => 'Callback',
+                    'options'   => [
+                        'callback'  => function ($value) {
+                            if (preg_match("/^p\\.?o\\.? box/uis", $value) === 0) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        },
+                        'message'   => 'Our shipping carrier does not ship to PO Boxes'
+                    ]
+                    ]
+                ]
+            ]
     	));
     }	
 }

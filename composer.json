@@ -2,19 +2,17 @@
     "name": "inkcloud/ic-base",
     "description": "Ink Cloud Base Module",
     "license": "Prop",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.4",
         "ext-intl":"*",
-        "ext-soap":"*",
-        "ext-mbstring":"*"
     },
     "autoload": {
         "psr-0": {
             "IcBase\\": "src/"
         }
-    },    
-    "config": {    
+    },
+    "config": {
         "discard-changes": true
     }
 
